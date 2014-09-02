@@ -44,3 +44,4 @@ settings.py
 wsgi.py
 manage.py
 .idea
+tmp
