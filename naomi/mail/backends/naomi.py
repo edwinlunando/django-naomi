@@ -1,7 +1,7 @@
 import datetime
 import os
-from django.core.mail.backends.filebased import EmailBackend
 import webbrowser
+from django.core.mail.backends.filebased import EmailBackend
 from django.template.loader import render_to_string
 
 
@@ -10,7 +10,8 @@ class NaomiBackend(EmailBackend):
     """
 
     def write_message(self, message):
-        template_content = render_to_string('naomi/message.html', {'message': message})
+        body = message.alternatives[0][0]
+        template_content = render_to_string('naomi/message.html', {'message': message, 'body': body})
         self.stream.write(template_content)
 
     def _get_filename(self):
