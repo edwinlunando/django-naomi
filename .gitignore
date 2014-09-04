@@ -45,3 +45,5 @@ wsgi.py
 manage.py
 .idea
 tmp
+build
+dist
