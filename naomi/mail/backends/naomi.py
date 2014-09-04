@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 
 class NaomiBackend(EmailBackend):
     """
+    Email backend for Django that let you preview email on your web browser
     """
 
     def write_message(self, message):
