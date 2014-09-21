@@ -10,10 +10,14 @@ class NaomiBackend(EmailBackend):
     Email backend for Django that let you preview email on your web browser
     """
 
+    def __init__(self, *args, **kwargs):
+        super(NaomiBackend, self).__init__(*args, **kwargs)
+
     def write_message(self, message):
         body = message.alternatives[0][0]
         template_content = render_to_string('naomi/message.html', {'message': message, 'body': body})
         self.stream.write(template_content)
+        # self.stream.write('123123')
 
     def _get_filename(self):
         """Return a unique file name."""
@@ -23,3 +27,20 @@ class NaomiBackend(EmailBackend):
             self._fname = os.path.join(self.file_path, fname)
             webbrowser.open(self._fname)
         return self._fname
+
+    def send_messages(self, email_messages):
+        """Write all messages to the stream in a thread-safe way."""
+        if not email_messages:
+            return
+        with self._lock:
+            try:
+                stream_created = self.open()
+                for message in email_messages:
+                    self.write_message(message)
+                    self.stream.flush()
+                if stream_created:
+                    self.close()
+            except:
+                if not self.fail_silently:
+                    raise
+        return len(email_messages)
