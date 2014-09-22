@@ -3,6 +3,11 @@
 History
 =======
 
+0.2
+------
+* Fix text email format
+
+
 0.1.1
 ------
 
