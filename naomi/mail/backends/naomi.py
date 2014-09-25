@@ -14,7 +14,10 @@ class NaomiBackend(EmailBackend):
         super(NaomiBackend, self).__init__(*args, **kwargs)
 
     def write_message(self, message):
-        body = message.alternatives[0][0]
+        if hasattr(message, 'alternatives'):
+            body = message.alternatives[0][0]
+        else:
+            body = message.body
         template_content = render_to_string('naomi/message.html', {'message': message, 'body': body})
         self.stream.write(template_content)
         # self.stream.write('123123')
