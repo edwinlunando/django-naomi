@@ -1,5 +1,6 @@
 import datetime
 import os
+import six
 import webbrowser
 from django.core.mail.backends.filebased import EmailBackend
 from django.template.loader import render_to_string
@@ -14,13 +15,15 @@ class NaomiBackend(EmailBackend):
         super(NaomiBackend, self).__init__(*args, **kwargs)
 
     def write_message(self, message):
-        if hasattr(message, 'alternatives'):
+        if hasattr(message, 'alternatives') and message.alternatives:
             body = message.alternatives[0][0]
         else:
             body = message.body
         template_content = render_to_string('naomi/message.html', {'message': message, 'body': body})
-        self.stream.write(template_content)
-        # self.stream.write('123123')
+        if six.PY3:
+            self.stream.write(bytes(template_content, 'UTF-8'))
+        else:
+            self.stream.write(template_content)
 
     def _get_filename(self):
         """Return a unique file name."""
@@ -39,7 +42,10 @@ class NaomiBackend(EmailBackend):
             try:
                 stream_created = self.open()
                 for message in email_messages:
-                    self.write_message(message)
+                    if six.PY3:
+                        self.write_message(message)
+                    else:
+                        self.write_message(message)
                     self.stream.flush()
                 if stream_created:
                     self.close()

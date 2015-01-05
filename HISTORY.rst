@@ -3,6 +3,14 @@
 History
 =======
 
+0.4
+-----
+* Fix bug on Python 3 about encoding
+
+0.3
+------
+* Fix error on using Django text email
+
 0.2
 ------
 * Fix text email format
