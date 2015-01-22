@@ -12,7 +12,7 @@ First, install django-naomi by using pip. You can add `django-naomi` to your req
 
 Then, add `naomi` to your `INSTALLED_APPS` on your django settings file. ::
 
-    INSTALLED_APPS += 'naomi'
+    INSTALLED_APPS += ['naomi']
 
 
 Lastly, change the Django email backend and set the temporary directory. ::
