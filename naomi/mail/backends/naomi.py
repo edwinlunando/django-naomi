@@ -23,7 +23,7 @@ class NaomiBackend(EmailBackend):
         if six.PY3:
             self.stream.write(bytes(template_content, 'UTF-8'))
         else:
-            self.stream.write(template_content)
+            self.stream.write(template_content.encode('UTF-8'))
 
     def _get_filename(self):
         """Return a unique file name."""
