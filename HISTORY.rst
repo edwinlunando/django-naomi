@@ -3,9 +3,13 @@
 History
 =======
 
-0.5
+0.6
 -----
 * Fix Django string encoding bug
+
+0.5
+-----
+* Fix missing template files
 
 0.4
 -----
