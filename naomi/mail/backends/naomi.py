@@ -31,8 +31,12 @@ class NaomiBackend(EmailBackend):
             timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
             fname = "%s-%s.html" % (timestamp, abs(id(self)))
             self._fname = os.path.join(self.file_path, fname)
-            webbrowser.open(self._fname)
         return self._fname
+
+    def close(self):
+        result = super(NaomiBackend, self).close()
+        webbrowser.open('file://' + self._fname)
+        return result
 
     def send_messages(self, email_messages):
         """Write all messages to the stream in a thread-safe way."""
