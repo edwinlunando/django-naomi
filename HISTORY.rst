@@ -3,6 +3,10 @@
 History
 =======
 
+0.7
+-----
+* Fix web browser open file on Mac issue
+
 0.6
 -----
 * Fix Django string encoding bug
