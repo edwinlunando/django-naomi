@@ -1,7 +1,7 @@
 django-naomi
 ============
 
-Django-naomi is a email backend for Django that let you preview email from your web browser instead of sending it using SMTP server. This is perfect for development environment that lack of SMTP server or you want to debug the email message. This library is inspired from `Letter Opener <https://github.com/ryanb/letter_opener>`_.
+Django-naomi is a email backend for Django that let you preview email from your web browser instead of sending it using SMTP server. This is perfect for development environment that lack of SMTP server or you want to debug the email message. Attachment will be shown as link. This library is inspired from `Letter Opener <https://github.com/ryanb/letter_opener>`_.
 
 Django Setup
 ------------

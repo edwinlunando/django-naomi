@@ -3,6 +3,10 @@
 History
 =======
 
+0.8
+-----
+* Attachment support!
+
 0.7
 -----
 * Fix web browser open file on Mac issue

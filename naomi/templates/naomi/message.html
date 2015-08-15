@@ -73,13 +73,13 @@
                 <div class="col-left">To:</div>
                 <div class="col-right">{{ message.to }}</div>
             </div>
-            {% if message.attachments %}
+            {% if attachments %}
                 <div class="row">
                     <div class="col-left">Attachment:</div>
                     <div class="col-right">
                         <ul>
-                            {% for attachment in message.attachments %}
-                                <li>{{ attachment }}</li>
+                            {% for attachment in attachments %}
+                                <li><a href="file://{{ attachment.1 }}">{{ attachment.0 }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

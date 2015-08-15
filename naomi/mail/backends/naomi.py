@@ -2,6 +2,7 @@ import datetime
 import os
 import six
 import webbrowser
+from django.conf import settings
 from django.core.mail.backends.filebased import EmailBackend
 from django.template.loader import render_to_string
 
@@ -15,11 +16,24 @@ class NaomiBackend(EmailBackend):
         super(NaomiBackend, self).__init__(*args, **kwargs)
 
     def write_message(self, message):
+        attachments = []
+        if hasattr(message, 'attachments') and message.attachments:
+            temporary_path = settings.EMAIL_FILE_PATH
+            for attachment in message.attachments:
+                new_file = open(os.path.join(temporary_path, attachment.name), 'wb+')
+                new_file.write(attachment.read())
+                attachments.append([attachment.name, new_file.name])
+                new_file.close()
         if hasattr(message, 'alternatives') and message.alternatives:
             body = message.alternatives[0][0]
         else:
             body = message.body
-        template_content = render_to_string('naomi/message.html', {'message': message, 'body': body})
+        context = {
+            'message': message,
+            'body': body,
+            'attachments': attachments
+        }
+        template_content = render_to_string('naomi/message.html', context)
         if six.PY3:
             self.stream.write(bytes(template_content, 'UTF-8'))
         else:
